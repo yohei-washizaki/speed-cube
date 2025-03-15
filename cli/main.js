@@ -85,6 +85,7 @@ function drawCubes(cubes, drawIndices) {
     // ***|***|***|***|***|***
     // ***|***|***|***|***|***
     // ***|***|***|***|***|***
+    console.log();
 
     const maxRawCount = 3;
     for(let i=0; i<maxRawCount; i++){
@@ -102,16 +103,17 @@ function drawCubes(cubes, drawIndices) {
         }
         line = line.slice(0, -1);
         console.log(line);
-        }
+    }
+    console.log();
 }
 
-function gameLoop(turnCount) {
+function updateGameState(turnCount) {
     console.log(`Turn count: ${turnCount}`);
     drawCubes(cubes, drawIndices);
-    waitForInput(turnCount);
+    tickGame(turnCount);
 }
 
-function waitForInput(turnCount) {
+function tickGame(turnCount) {
     turnCount++;
     const rl = readline.createInterface({
         input: process.stdin,
@@ -123,11 +125,13 @@ function waitForInput(turnCount) {
             console.log('Game exited.');
             process.exit(0);
         } else {
-            gameLoop(turnCount);
+            updateGameState(turnCount);
         }
     });
 }
 
-// Start the game loop
-let turnCount = 0;
-waitForInput(turnCount);
+function startGameLoop() {
+    tickGame(0);
+}
+
+startGameLoop();
